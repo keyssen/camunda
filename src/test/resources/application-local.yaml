@@ -1,0 +1,76 @@
+server:
+  servlet:
+    context-path: /
+  port: 8084
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:memdb;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: p
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      #http://localhost:8080/h2-console
+      enabled: true
+  main:
+    banner-mode: CONSOLE
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: baeldung
+
+camunda.bpm:
+  generic-properties:
+    properties:
+      enforceHistoryTimeToLive: false
+  admin-user:
+    id: demo
+    password: demo
+    firstName: Demo
+  filter:
+    create: All tasks
+  job-execution:
+    enabled: false
+
+kafka:
+  bootstrapAddress: localhost:9091
+  groupId: group1
+
+rest:
+  contract-service:
+    mock:
+      enabled: true
+    host: ${CONTRACT_URL:http://localhost:8092}
+    methods:
+      registration: contract/registration
+      delete: contract/delete
+
+  product-service:
+    mock:
+      enabled: false
+    host: ${PRODUCT_URL:http://localhost:8080}
+    methods:
+      change-status: status
+
+  notification-service:
+    mock:
+      enabled: true
+    host: ${NOTIFICATION_URL:http://localhost:8093}
+    methods:
+      send: send
+
+  delivery-service:
+    mock:
+      enabled: false
+    host: ${DELIVERY_URL:http://localhost:8094}
+    methods:
+      get-date: getdate
+      cancel: cancel
+
+  payment-service:
+    mock:
+      enabled: false
+    host: ${PAYMENT_URL:http://localhost:8095}
+    methods:
+      payment: payment
