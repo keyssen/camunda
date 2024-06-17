@@ -13,8 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import ras.demo.camunda.kafka.Consumer;
-import ras.demo.camunda.kafka.Producer;
+import ras.demo.camunda.TestKafka.kafka.TestConsumer;
+import ras.demo.camunda.TestKafka.kafka.TestProducer;
 import ras.demo.camunda.model.StartConfirmDTO;
 import ras.demo.camunda.restService.deliveryService.DeliveryService;
 import ras.demo.camunda.restService.deliveryService.model.DeliveryDTO;
@@ -35,13 +35,16 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-@EmbeddedKafka(brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
+@EmbeddedKafka(brokerProperties = {"listeners=PLAINTEXT://localhost:9091", "port=9091"})
 @WireMockTest
 @DirtiesContext
 class CamundaApplicationTests {
 
     @Autowired
-    private Consumer consumer;
+    private TestConsumer testConsumer;
+
+    @Autowired
+    private TestProducer testProducer;
 
     @RegisterExtension
     static WireMockExtension wireMockServer = WireMockExtension.newInstance()
@@ -101,9 +104,6 @@ class CamundaApplicationTests {
 
     @Autowired
     private RuntimeService runtimeService;
-
-    @Autowired
-    private Producer producer;
 
     private static final String PROCESS_KEY = "ConfirmProcessKey";
 

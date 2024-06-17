@@ -1,4 +1,4 @@
-package ras.demo.camunda.kafka;
+package ras.demo.camunda.TestKafka.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,16 +11,16 @@ import ras.demo.camunda.kafka.request.EventSource;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class Producer {
-    private final KafkaTemplate<String, byte[]> kafkaTemplateByteArray;
+public class TestProducer {
+    private final KafkaTemplate<String, byte[]> kafkaTestTemplateByteArray;
 
-    public static final String TEST_TOPIC = "test_topic2";
+    public static final String PRODUCER_TOPIC_NAME = "compliance_to_camunda_topic";
 
     public void sendEvent(final String topic, final String key, final EventSource event) throws JsonProcessingException {
-        System.out.println("sendEvent");
+
         final ObjectMapper objectMapper = new ObjectMapper();
         final byte[] data = objectMapper.writeValueAsBytes(event);
 
-        kafkaTemplateByteArray.send(topic, key, data);
+        kafkaTestTemplateByteArray.send(topic, key, data);
     }
 }
