@@ -1,7 +1,7 @@
 server:
   servlet:
     context-path: /
-  port: 8084
+  port: 8080
 
 spring:
   datasource:
@@ -15,23 +15,11 @@ spring:
       enabled: true
   main:
     banner-mode: CONSOLE
-  kafka:
-    consumer:
-      auto-offset-reset: earliest
-      group-id: baeldung
 
 camunda.bpm:
   generic-properties:
     properties:
       enforceHistoryTimeToLive: false
-  admin-user:
-    id: demo
-    password: demo
-    firstName: Demo
-  filter:
-    create: All tasks
-  job-execution:
-    enabled: false
 
 kafka:
   bootstrapAddress: localhost:9091
@@ -40,7 +28,7 @@ kafka:
 rest:
   contract-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${CONTRACT_URL:http://localhost:8092}
     methods:
       registration: contract/registration
@@ -55,14 +43,14 @@ rest:
 
   notification-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${NOTIFICATION_URL:http://localhost:8093}
     methods:
       send: send
 
   delivery-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${DELIVERY_URL:http://localhost:8094}
     methods:
       get-date: getdate
@@ -70,7 +58,7 @@ rest:
 
   payment-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${PAYMENT_URL:http://localhost:8095}
     methods:
       payment: payment

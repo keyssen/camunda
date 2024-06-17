@@ -4,34 +4,27 @@ server:
   port: 8084
 
 spring:
-  datasource:
-    url: jdbc:h2:mem:memdb;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password: p
-    driverClassName: org.h2.Driver
-  h2:
-    console:
-      #http://localhost:8080/h2-console
-      enabled: true
+  application:
+    name: demo-camunda
   main:
-    banner-mode: CONSOLE
-  kafka:
-    consumer:
-      auto-offset-reset: earliest
-      group-id: baeldung
+    banner-mode: off
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/camunda?currentSchema-public
+    username: postgres
+    password: password
+    driverClassName: org.postgresql.Driver
 
 camunda.bpm:
-  generic-properties:
-    properties:
-      enforceHistoryTimeToLive: false
   admin-user:
     id: demo
     password: demo
     firstName: Demo
-  filter:
-    create: All tasks
-  job-execution:
-    enabled: false
+  generic-properties:
+    properties:
+      enforceHistoryTimeToLive: false
 
 kafka:
   bootstrapAddress: localhost:9091
@@ -40,7 +33,7 @@ kafka:
 rest:
   contract-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${CONTRACT_URL:http://localhost:8092}
     methods:
       registration: contract/registration
@@ -55,14 +48,14 @@ rest:
 
   notification-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${NOTIFICATION_URL:http://localhost:8093}
     methods:
       send: send
 
   delivery-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${DELIVERY_URL:http://localhost:8094}
     methods:
       get-date: getdate
@@ -70,7 +63,7 @@ rest:
 
   payment-service:
     mock:
-      enabled: false
+      enabled: true
     host: ${PAYMENT_URL:http://localhost:8095}
     methods:
       payment: payment
