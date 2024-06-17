@@ -22,7 +22,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public LocalDateTime delivery(DeliveryDTO deliveryDTO) {
-        return this.deliveryServiceWebClient.post()
+        return deliveryServiceWebClient.post()
                 .uri(deliveryServiceProperties.getMethods().getGetDate())
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(deliveryDTO)
@@ -33,7 +33,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public void cancel(UUID orderId) {
-        this.deliveryServiceWebClient.post()
+        deliveryServiceWebClient.post()
                 .uri(String.format("%s/%s", deliveryServiceProperties.getMethods().getCancel(), orderId))
                 .retrieve()
                 .bodyToMono(Void.class)

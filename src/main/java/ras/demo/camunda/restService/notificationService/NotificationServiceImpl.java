@@ -21,7 +21,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void send(UUID orderId, ChangeStatusDTO changeStatusDTO) {
-        this.notificationServiceWebClient.post()
+        notificationServiceWebClient.post()
                 .uri(String.format("%s/%s", orderId, notificationServiceProperties.getMethods().getSend()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(changeStatusDTO)

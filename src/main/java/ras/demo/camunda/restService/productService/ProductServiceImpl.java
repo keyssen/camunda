@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void changeStatus(ChangeStatusDTO changeStatusDTO, UUID orderId) {
-        this.productServiceWebClient.patch()
+        productServiceWebClient.patch()
                 .uri(String.format("orders/%s/%s", orderId, productServiceProperties.getMethods().getChangeStatus()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(changeStatusDTO)

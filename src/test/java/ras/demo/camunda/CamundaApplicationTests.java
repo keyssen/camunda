@@ -27,6 +27,7 @@ import ras.demo.camunda.model.StartConfirmDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -95,7 +96,7 @@ class CamundaApplicationTests {
 
     private static final int innLength = 10;
 
-    private Map<String, Object> variables;
+    private Map<String, Object> variables = new HashMap<>();
 
     @BeforeEach
     void setUp() {
@@ -142,7 +143,7 @@ class CamundaApplicationTests {
     }
 
     @Test
-    public void testWaitForEndEvent() {
+    public void testCamunda() {
         StartConfirmDTO startConfirmDTO = new StartConfirmDTO(UUID.fromString("52b37abb-9138-4c63-a085-f6ed586cf2c5"), "string", generateRandomInn(), generateRandomAccountNumber(), BigDecimal.valueOf(40.00), "login-null");
         variables.put("orderInfo", startConfirmDTO);
 

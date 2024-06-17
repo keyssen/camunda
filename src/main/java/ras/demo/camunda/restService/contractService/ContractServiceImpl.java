@@ -21,7 +21,7 @@ public class ContractServiceImpl implements ContractService {
 
     public UUID registration(ContractRegistrationDTO contractRegistrationDTO) {
         log.info("Impl contract service is used");
-        return this.contractServiceWebClient.post()
+        return contractServiceWebClient.post()
                 .uri(contractServiceProperties.getMethods().getRegistration())
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(contractRegistrationDTO)
@@ -32,7 +32,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public void delete(UUID contractId) {
-        this.contractServiceWebClient.delete()
+        contractServiceWebClient.delete()
                 .uri(String.format("%s/%s", contractServiceProperties.getMethods().getDelete(), contractId))
                 .retrieve()
                 .bodyToMono(Void.class)
