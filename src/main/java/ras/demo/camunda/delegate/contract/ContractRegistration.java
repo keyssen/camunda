@@ -1,6 +1,7 @@
 package ras.demo.camunda.delegate.contract;
 
 import lombok.RequiredArgsConstructor;
+import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
@@ -17,9 +18,12 @@ public class ContractRegistration implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) {
-        System.out.println("ContractRegistration");
-        StartConfirmDTO startConfirmDto = (StartConfirmDTO) delegateExecution.getVariable("orderInfo");
-        UUID contractId = contractService.registration(new ContractRegistrationDTO(startConfirmDto.getInn(), startConfirmDto.getAccountNumber()));
-        delegateExecution.setVariable("contractId", contractId);
+        try {
+            StartConfirmDTO startConfirmDto = (StartConfirmDTO) delegateExecution.getVariable("orderInfo");
+            UUID contractId = contractService.registration(new ContractRegistrationDTO(startConfirmDto.getInn(), startConfirmDto.getAccountNumber()));
+            delegateExecution.setVariable("contractId", contractId);
+        } catch (Exception e) {
+            throw new BpmnError("delegateError");
+        }
     }
 }

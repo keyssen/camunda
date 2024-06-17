@@ -19,9 +19,8 @@ public class PaymentDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) {
         StartConfirmDTO startConfirmDto = (StartConfirmDTO) delegateExecution.getVariable("orderInfo");
-        System.out.println("PaymentDelegate");
-        System.out.println(paymentService.payment(new PaymentDTO(startConfirmDto.getId(), startConfirmDto.getTotalPrice(), startConfirmDto.getAccountNumber())));
-        if (Objects.equals(paymentService.payment(new PaymentDTO(startConfirmDto.getId(), startConfirmDto.getTotalPrice(), startConfirmDto.getAccountNumber())), "FAILED")) {
+        Boolean error = (Boolean) delegateExecution.getVariable("error");
+        if (error != null && Objects.equals(paymentService.payment(new PaymentDTO(startConfirmDto.getId(), startConfirmDto.getTotalPrice(), startConfirmDto.getAccountNumber())), "FAILED")) {
             throw new BpmnError("delegateError");
         }
         delegateExecution.setVariable("error", false);

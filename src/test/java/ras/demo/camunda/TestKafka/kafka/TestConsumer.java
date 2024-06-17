@@ -15,15 +15,11 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class TestConsumer {
-    static {
-        System.out.println("TestConsumer");
-    }
 
     private final Set<EventHandler<EventSource>> eventHandlers;
 
     @KafkaListener(topics = "test_topic2", containerFactory = "kafkaTestListenerContainerFactoryString")
     public void listenGroupTopic2(byte[] message) {
-        System.out.println("createOrder");
         log.info("Receive message: {}", message);
 
         final ObjectMapper objectMapper = new ObjectMapper();

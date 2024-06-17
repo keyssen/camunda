@@ -20,12 +20,13 @@ public class DeliveryDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) {
         try {
             StartConfirmDTO startConfirmDto = (StartConfirmDTO) delegateExecution.getVariable("orderInfo");
-            LocalDateTime deliveryDateTime = deliveryService.delivery(new DeliveryDTO(startConfirmDto.getDeliveryAddress(), startConfirmDto.getId()));
-            System.out.println("DeliveryDelegate");
-            delegateExecution.setVariable("deliveryDateTime", deliveryDateTime);
+            Boolean error = (Boolean) delegateExecution.getVariable("error");
+            if (error == null) {
+                LocalDateTime deliveryDateTime = deliveryService.delivery(new DeliveryDTO(startConfirmDto.getDeliveryAddress(), startConfirmDto.getId()));
+                delegateExecution.setVariable("deliveryDateTime", deliveryDateTime);
+            }
         } catch (Exception e) {
             throw new BpmnError("delegateError");
         }
-
     }
 }

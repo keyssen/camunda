@@ -25,14 +25,6 @@ public class ComplianceOrderTestHandler implements EventHandler<ComplianceOrderR
 
     @Override
     public void handleEvent(ComplianceOrderRequest eventSource) throws JsonProcessingException {
-        System.out.println("handleEvent");
-        try {
-            Thread.sleep(1000); // 1000 миллисекунд = 1 секунда
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("handleEvent");
-//        producer.sendEvent(Producer.PRODUCER_TOPIC_NAME, String.valueOf(eventSource.getBusinessKey()), new ComplianceRequest(new Random().nextBoolean(), eventSource.getBusinessKey()));
         producer.sendEvent(TestProducer.PRODUCER_TOPIC_NAME, String.valueOf(eventSource.getBusinessKey()), new ComplianceRequest(true, eventSource.getBusinessKey()));
 
     }

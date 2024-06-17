@@ -22,8 +22,8 @@ public class ComplianceHandler implements EventHandler<ComplianceRequest> {
 
     @Override
     public void handleEvent(ComplianceRequest eventSource) {
-        System.out.println("ComplianceHandler");
-        System.out.println(!eventSource.getIsCompliance());
+        log.info("ComplianceHandler");
+        log.info(String.valueOf(!eventSource.getIsCompliance()));
 
         runtimeService
                 .createMessageCorrelation("continueProcessMsg")

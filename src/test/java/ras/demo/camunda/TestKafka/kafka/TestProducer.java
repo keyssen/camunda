@@ -17,7 +17,7 @@ public class TestProducer {
     public static final String PRODUCER_TOPIC_NAME = "compliance_to_camunda_topic";
 
     public void sendEvent(final String topic, final String key, final EventSource event) throws JsonProcessingException {
-
+        
         final ObjectMapper objectMapper = new ObjectMapper();
         final byte[] data = objectMapper.writeValueAsBytes(event);
 

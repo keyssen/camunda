@@ -17,7 +17,6 @@ public class Producer {
     public static final String TEST_TOPIC = "test_topic2";
 
     public void sendEvent(final String topic, final String key, final EventSource event) throws JsonProcessingException {
-        System.out.println("sendEvent");
         final ObjectMapper objectMapper = new ObjectMapper();
         final byte[] data = objectMapper.writeValueAsBytes(event);
 

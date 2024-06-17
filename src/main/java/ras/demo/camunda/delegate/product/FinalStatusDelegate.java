@@ -18,7 +18,6 @@ public class FinalStatusDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution delegateExecution) {
-        System.out.println("FinalStatusDelegate");
         Boolean errorFlag = (Boolean) delegateExecution.getVariable("error");
         LocalDateTime deliveryDateTime = (LocalDateTime) delegateExecution.getVariable("deliveryDateTime");
         StartConfirmDTO startConfirmDto = (StartConfirmDTO) delegateExecution.getVariable("orderInfo");

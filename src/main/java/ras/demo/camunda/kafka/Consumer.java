@@ -1,6 +1,5 @@
 package ras.demo.camunda.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +19,7 @@ public class Consumer {
     private final Set<EventHandler<EventSource>> eventHandlers;
 
     @KafkaListener(topics = "compliance_to_camunda_topic", containerFactory = "kafkaListenerContainerFactoryString")
-    public void listenGroupTopic2(byte[] message) throws JsonProcessingException {
-        System.out.println("createOrder");
+    public void listenGroupTopic2(byte[] message) {
         log.info("Receive message: {}", message);
 
         final ObjectMapper objectMapper = new ObjectMapper();

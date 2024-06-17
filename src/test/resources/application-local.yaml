@@ -40,7 +40,7 @@ kafka:
 rest:
   contract-service:
     mock:
-      enabled: true
+      enabled: false
     host: ${CONTRACT_URL:http://localhost:8092}
     methods:
       registration: contract/registration
@@ -55,7 +55,7 @@ rest:
 
   notification-service:
     mock:
-      enabled: true
+      enabled: false
     host: ${NOTIFICATION_URL:http://localhost:8093}
     methods:
       send: send
