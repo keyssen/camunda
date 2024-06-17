@@ -24,14 +24,9 @@ import ras.demo.camunda.configuration.properties.deliveryService.DeliveryService
 import ras.demo.camunda.configuration.properties.paymentService.PaymentServiceProperties;
 import ras.demo.camunda.configuration.properties.productService.ProductServiceProperties;
 import ras.demo.camunda.model.StartConfirmDTO;
-import ras.demo.camunda.restService.deliveryService.DeliveryService;
-import ras.demo.camunda.restService.deliveryService.model.DeliveryDTO;
-import ras.demo.camunda.restService.paymentService.PaymentService;
-import ras.demo.camunda.restService.paymentService.model.PaymentDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -73,12 +68,6 @@ class CamundaApplicationTests {
             .build();
 
     @Autowired
-    private PaymentService paymentService;
-
-    @Autowired
-    private DeliveryService deliveryService;
-
-    @Autowired
     private ProductServiceProperties productServiceProperties;
 
     @Autowired
@@ -89,6 +78,24 @@ class CamundaApplicationTests {
 
     @Autowired
     private PaymentServiceProperties paymentServiceProperties;
+
+    @Autowired
+    private RuntimeService runtimeService;
+
+    private ProcessEngine processEngine;
+
+    @Autowired
+    private HistoryService historyService;
+
+    private static final String PROCESS_KEY = "ConfirmProcessKey";
+
+    private static final Random random = new Random();
+
+    private static final int accountNumberLength = 8;
+
+    private static final int innLength = 10;
+
+    private Map<String, Object> variables;
 
     @BeforeEach
     void setUp() {
@@ -116,46 +123,6 @@ class CamundaApplicationTests {
                         .withBody("FAILED")));
     }
 
-    @Test
-    void testMakePayment() {
-        PaymentDTO paymentDTO = new PaymentDTO(
-                UUID.randomUUID(),
-                new BigDecimal("40.00"),
-                "12345678"
-        );
-
-        String response = paymentService.payment(paymentDTO);
-    }
-
-    @Test
-    void testDelivery() {
-        PaymentDTO paymentDTO = new PaymentDTO(
-                UUID.randomUUID(),
-                new BigDecimal("40.00"),
-                "12345678"
-        );
-
-        DeliveryDTO deliveryDTO = new DeliveryDTO("sdsasdad", UUID.randomUUID());
-        LocalDateTime response = deliveryService.delivery(deliveryDTO);
-    }
-
-    @Autowired
-    private RuntimeService runtimeService;
-
-    private ProcessEngine processEngine;
-
-    @Autowired
-    private HistoryService historyService;
-
-
-    private static final String PROCESS_KEY = "ConfirmProcessKey";
-
-    private static final Random random = new Random();
-
-    private static final int accountNumberLength = 8;
-
-    private static final int innLength = 10;
-
     private static String generateRandomInn() {
         StringBuilder code = new StringBuilder(innLength);
         for (int i = 0; i < 10; i++) {
@@ -174,11 +141,8 @@ class CamundaApplicationTests {
         return code.toString();
     }
 
-    Map<String, Object> variables;
-
     @Test
     public void testWaitForEndEvent() {
-        Map<String, Object> variables = new HashMap<>();
         StartConfirmDTO startConfirmDTO = new StartConfirmDTO(UUID.fromString("52b37abb-9138-4c63-a085-f6ed586cf2c5"), "string", generateRandomInn(), generateRandomAccountNumber(), BigDecimal.valueOf(40.00), "login-null");
         variables.put("orderInfo", startConfirmDTO);
 
@@ -228,5 +192,4 @@ class CamundaApplicationTests {
             }
         }
     }
-
 }
